@@ -10,31 +10,28 @@ sudo apt install libarchive-tools
 
 sudo apt install zip
 
-mkdir server-downloads
-
-mkdir server-backup
-
-mkdir modpack-worlds
+mkdir server-backup #not required but PATH_BACKUPS has to point somewhere
 
 chmod a+x modpack-updater.sh
 
 
-either move the world to other location (everything should still work as before, but tested without AMP): mv world /home/miron/Downloads/valhelsia/modpack-worlds and then create a symlink: ln -s /home/miron/Downloads/valhelsia/modpack-worlds . (dot only when you are in directory where world is supposed to be)
 
-for convenience remember to link full path from root (/a/b/c/d/map)
+you can move the world to other location (everything should still work as before, but tested without AMP): mv world /home/miron/Downloads/valhelsia/modpack-worlds and then create a symlink: ln -s /home/miron/Downloads/valhelsia/modpack-worlds . (dot only when you are in directory where world is supposed to be)
 
-
-variables:
-
-ENV="$HOME/Downloads/valhelsia"   #set this variable to script location, KEEP THE DIRECTORY STRUCTURE as i didn't make sure it will work without it ^^
-
-PATH_DOWNLOADS="server-downloads"   #variable pointing at zip files download location
-
-PATH_BACKUPS="server-backups"   #variable for backup created when script is run
-
-PATH_CURRENT="valhelsia-2-test"  #has to point at valhelsia 2 directory
+remember to link as absolute path (from root directory) (/a/b/c/d/map)
 
 
-script will automatically create a backup of the current server version excluding symbolic links, so either symlink the world or add -x world/* as argument.
 
-usage: ./modpack-updater.sh server-downloads/Valhelsia+2-2.2.7.zip
+variables (ONLY ABSOLUTE PATHS)
+
+PATH_BACKUPS="/media/sf_cudashared/valhelsia-2/server-backups"   #variable for backup created when script is run
+
+PATH_CURRENT="/media/sf_cudashared/valhelsia-2/valhelsia-2-current"  #has to point at valhelsia 2 directory
+
+WORLD="/media/sf_cudashared/valhelsia-2/valhelsia-2-current/valhelsia-2-world" #script checks if value is NULL (empty) and will take it under account if world is present
+OR
+WORLD=     #choose whether it should omit world directory or not
+
+script will automatically create a backup of the current server version excluding symbolic links.
+
+usage: ./modpack-updater.sh Valhelsia+2-2.2.7.zip
